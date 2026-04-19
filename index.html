@@ -1,111 +1,560 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>HelloFriend</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HelloFriend</title>
   <style>
+    :root {
+      --bg: #fff8ef;
+      --card: #fffdf8;
+      --text: #2f2a2d;
+      --muted: #7f747a;
+      --purple: #b488ff;
+      --purple-dark: #9d70f5;
+      --pink: #ff8eb5;
+      --border: #f1dfc9;
+      --soft: #f9efe2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #fff8ef;
-      color: #2f2a2d;
-      text-align: center;
-      padding: 40px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(to bottom, #fff8ef 0%, #fffdf8 100%);
+      color: var(--text);
     }
 
-    h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-      font-weight: 600;
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
     }
 
-    h2 {
-      font-size: 20px;
-      color: #6f646a;
-      font-weight: 400;
-      margin-bottom: 40px;
-    }
-
-    .section {
-      max-width: 600px;
-      margin: 0 auto 40px;
-    }
-
-    .steps {
-      text-align: left;
-      margin-top: 20px;
-    }
-
-    .step {
-      margin-bottom: 20px;
-    }
-
-    .step-title {
-      font-weight: 600;
-      font-size: 18px;
-      color: #b488ff;
-    }
-
-    .footer {
-      margin-top: 60px;
-      font-size: 14px;
-      color: #8f858b;
+    .topbar {
+      padding: 24px 0;
     }
 
     .brand {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 40px 0 56px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: #f3e7ff;
+      color: var(--purple-dark);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 58px;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+      max-width: 680px;
+    }
+
+    .hero p {
+      margin: 0 0 28px;
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-block;
+      text-decoration: none;
+      padding: 14px 22px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: 0.2s ease;
+    }
+
+    .button-primary {
+      background: var(--purple);
+      color: white;
+    }
+
+    .button-primary:hover {
+      background: var(--purple-dark);
+      transform: translateY(-1px);
+    }
+
+    .button-secondary {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .button-secondary:hover {
+      background: #fff8f2;
+      transform: translateY(-1px);
+    }
+
+    .mockup {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(50, 35, 30, 0.06);
+    }
+
+    .screen {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 22px;
+      border: 1px solid #f4e8d9;
+    }
+
+    .screen-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .screen-title {
       font-size: 18px;
-      margin-bottom: 20px;
-      color: #b488ff;
+      font-weight: 700;
+    }
+
+    .pill {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--purple-dark);
+      background: #f2e6ff;
+      padding: 7px 10px;
+      border-radius: 999px;
+    }
+
+    .screen-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .screen-card h3 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    .screen-card p {
+      margin: 0;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .mini-box {
+      background: #fff4c9;
+      border-radius: 14px;
+      height: 54px;
+      border: 2px solid rgba(0,0,0,0.04);
+    }
+
+    .mini-box.active {
+      background: #c8f6ff;
+      border-color: #ffbe2f;
+      box-shadow: 0 0 0 4px rgba(255, 190, 47, 0.18);
+    }
+
+    .screen-actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .action {
+      padding: 14px 16px;
+      border-radius: 16px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .action.primary {
+      background: var(--purple);
+      color: white;
+    }
+
+    .action.secondary {
+      background: #fff2df;
+      color: var(--text);
+    }
+
+    .action.pink {
+      background: var(--pink);
+      color: white;
+    }
+
+    section {
+      padding: 38px 0;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #9b8e83;
+      margin-bottom: 10px;
+    }
+
+    .section-heading {
+      font-size: 38px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin: 0 0 14px;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+      max-width: 760px;
+      margin: 0;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.75);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(50, 35, 30, 0.04);
+    }
+
+    .feature-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+      background: #f2e6ff;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 28px;
+    }
+
+    .info-card {
+      background: rgba(255,255,255,0.75);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+    }
+
+    .info-card h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    .bullet-list {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .bottom-cta {
+      margin-top: 14px;
+      background: linear-gradient(135deg, #fffdf8, #fff2fb);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .bottom-cta h2 {
+      margin: 0 0 12px;
+      font-size: 34px;
+      letter-spacing: -0.03em;
+    }
+
+    .bottom-cta p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 42px 0 50px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer a {
+      color: var(--purple-dark);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .card-grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .section-heading {
+        font-size: 30px;
+      }
+
+      .bottom-cta h2 {
+        font-size: 28px;
+      }
+
+      .hero {
+        padding-top: 20px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        padding: 0 18px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .hero p,
+      .section-copy,
+      .bottom-cta p {
+        font-size: 17px;
+      }
+
+      .screen-card h3 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
-
 <body>
-
-<div class="brand">HelloFriend</div>
-
-<h1>Technology that helps people live independently</h1>
-
-<h2>
-HelloFriend is a voice-based companion that provides simple reminders,
-guidance, and support for everyday life.
-</h2>
-
-<div class="section">
-  <h3>How it works</h3>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-title">Reminds</div>
-      Voice reminders for medication, meals, and daily tasks
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">HelloFriend</div>
     </div>
 
-    <div class="step">
-      <div class="step-title">Guides</div>
-      Clear visual instructions that are easy to follow
-    </div>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Voice-based support for daily life</div>
+          <h1>Technology that helps people stay independent.</h1>
+          <p>
+            HelloFriend is a companion system for reminders, routines, and caregiver support —
+            designed for people who need a little extra help staying on track every day.
+          </p>
 
-    <div class="step">
-      <div class="step-title">Connects</div>
-      Keeps caregivers informed and involved
-    </div>
+          <div class="cta-row">
+            <a class="button button-primary" href="mailto:hello@hellofriend.care">Contact Us</a>
+            <a class="button button-secondary" href="#how-it-works">How it works</a>
+          </div>
+        </div>
+
+        <div class="mockup">
+          <div class="screen">
+            <div class="screen-top">
+              <div class="screen-title">grandma.care</div>
+              <div class="pill">Powered by HelloFriend</div>
+            </div>
+
+            <div class="screen-card">
+              <h3>Hi Barbara</h3>
+              <p>It’s time for your Monday Noon medicine. The correct compartment is highlighted below.</p>
+            </div>
+
+            <div class="mini-grid">
+              <div class="mini-box"></div>
+              <div class="mini-box"></div>
+              <div class="mini-box"></div>
+              <div class="mini-box"></div>
+              <div class="mini-box active"></div>
+              <div class="mini-box"></div>
+              <div class="mini-box"></div>
+              <div class="mini-box"></div>
+              <div class="mini-box"></div>
+            </div>
+
+            <div class="screen-actions">
+              <div class="action primary">I Took It</div>
+              <div class="action secondary">Remind Me Later</div>
+              <div class="action pink">Call Caregiver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works">
+      <div class="section-title">How it works</div>
+      <h2 class="section-heading">Simple support, built for real life.</h2>
+      <p class="section-copy">
+        HelloFriend combines voice guidance, visual reminders, and caregiver connection
+        into one simple system that helps people stay safe, supported, and independent.
+      </p>
+
+      <div class="card-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔔</div>
+          <h3>Reminds</h3>
+          <p>
+            Voice reminders for medications, meals, and daily tasks such as charging a phone,
+            locking doors, or replacing hearing aid batteries.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🧭</div>
+          <h3>Guides</h3>
+          <p>
+            Clear visual instructions help users know exactly what to do — from the right pill
+            compartment to the next step in their routine.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🤝</div>
+          <h3>Connects</h3>
+          <p>
+            Keeps caregivers informed through confirmation, snooze logic, and future notification
+            tools designed to support everyday independence.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="split">
+        <div class="info-card">
+          <h3>Built for everyday independence</h3>
+          <p>
+            HelloFriend is designed for seniors, caregivers, and eventually other adults who may
+            need extra help with routines, reminders, and daily living support.
+          </p>
+          <ul class="bullet-list">
+            <li>Medication reminders</li>
+            <li>Meal and nutrition reminders</li>
+            <li>Daily task reminders</li>
+            <li>Caregiver support and escalation</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>First application: grandma.care</h3>
+          <p>
+            grandma.care is the first product powered by HelloFriend — inspired by a real family need
+            and designed to help seniors and caregivers navigate everyday life with more clarity,
+            safety, and confidence.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="bottom-cta">
+        <h2>A simpler, safer way to stay on track.</h2>
+        <p>
+          We’re building technology that feels human, helpful, and easy to use —
+          for caregivers, families, and the people they support.
+        </p>
+        <a class="button button-primary" href="mailto:hello@hellofriend.care">Questions? Contact Us</a>
+      </div>
+    </section>
+
+    <footer>
+      <div style="margin-bottom: 10px;">
+        Questions? Contact us at
+        <a href="mailto:hello@hellofriend.care">hello@hellofriend.care</a>
+      </div>
+      © HelloFriend
+    </footer>
   </div>
-</div>
-
-<div class="section">
-  <h3>Built for real life</h3>
-  Seniors • Individuals with cognitive challenges • Caregivers
-</div>
-
-<div class="footer">
-  <div style="margin-bottom: 10px;">
-    Questions? Contact us at 
-    <a href="mailto:hello@hellofriend.care" style="color:#b488ff; text-decoration:none;">
-      hello@hellofriend.care
-    </a>
-  </div>
-  © HelloFriend
-</div>
-
 </body>
 </html>
